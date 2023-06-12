@@ -6,3 +6,8 @@ reports/
 roms/
 testing/
 .venv
+.vs
+pokebot-sharp/.vs
+pokebot-sharp/Pokebot-Sharp/bin
+pokebot-sharp/Pokebot-Sharp/obj
+pokebot-sharp/Pokebot-Sharp/*.csproj.user

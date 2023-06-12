@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "BizHawk": {
+      "commandName": "Executable",
+      "executablePath": "..\\BizHawk\\EmuHawk.exe",
+      "commandLineArgs": "--open-ext-tool-dll=Pokebot_Sharp",
+      "workingDirectory": "..\\BizHawk",
+      "nativeDebugging": true
+    }
+  }
+}

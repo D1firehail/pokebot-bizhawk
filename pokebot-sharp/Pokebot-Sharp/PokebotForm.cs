@@ -1,9 +1,6 @@
 ﻿using BizHawk.Client.Common;
 using BizHawk.Client.EmuHawk;
-using BizHawk.Emulation.Common;
 using System;
-using System.Net;
-using System.Threading;
 
 namespace Pokebot_Sharp.Common
 {
@@ -18,12 +15,17 @@ namespace Pokebot_Sharp.Common
             => _maybeAPIContainer!;
 
 
-        public MemoryApi MemAPI { get; set; }
-
-        public PokebotForm() 
+        public PokebotForm()
         {
             InitializeComponent();
             m_AddressCollection = new Emer_U_AddressCollection();
+        }
+
+        public override void Restart()
+        {
+            base.Restart();
+            m_AddressCollection.MemoryApi = APIs.Memory;
+            m_AddressCollection.ResetPointedAddresses();
         }
 
         private void LogCallback(string message)
@@ -53,8 +55,18 @@ namespace Pokebot_Sharp.Common
 
                 //return;
                 textBox_TestOutput.Clear();
-                textBox_TestOutput.AppendText("PosX: " + (ReadSingleAddress(m_AddressCollection.PosX) - 7) + Environment.NewLine);
-                textBox_TestOutput.AppendText("PosY: " + (ReadSingleAddress(m_AddressCollection.PosY) - 7) + Environment.NewLine);
+                textBox_TestOutput.AppendText("Tid: " + m_AddressCollection.Tid.Read(APIs.Memory) + Environment.NewLine);
+                textBox_TestOutput.AppendText("Sid: " + m_AddressCollection.Sid.Read(APIs.Memory) + Environment.NewLine);
+                textBox_TestOutput.AppendText("TrainerState: " + m_AddressCollection.TrainerState.Read(APIs.Memory) + Environment.NewLine);
+                textBox_TestOutput.AppendText("MapId: " + m_AddressCollection.MapId.Read(APIs.Memory) + Environment.NewLine);
+                textBox_TestOutput.AppendText("TrainerMapBank: " + m_AddressCollection.TrainerMapBank.Read(APIs.Memory) + Environment.NewLine);
+                textBox_TestOutput.AppendText("PosX: " + (m_AddressCollection.PosX.Read(APIs.Memory) - 7) + Environment.NewLine);
+                textBox_TestOutput.AppendText("PosY: " + (m_AddressCollection.PosY.Read(APIs.Memory) - 7) + Environment.NewLine);
+                textBox_TestOutput.AppendText("Facing: " + (m_AddressCollection.Facing.Read(APIs.Memory) - 7) + Environment.NewLine);
+                Mon enemy = new Mon();
+                m_AddressCollection.Enemy.ReadInto(APIs.Memory, enemy);
+                MonParty party = new MonParty(m_AddressCollection.PartyCount);
+                m_AddressCollection.Party.ReadInto(APIs.Memory, party);
                 //Thread.Sleep(10);
             }
         }
@@ -63,21 +75,6 @@ namespace Pokebot_Sharp.Common
         private void btn_MasterToggle_Click(object sender, System.EventArgs e)
         {
             m_BotEnabled = !m_BotEnabled;
-        }
-
-        private uint ReadSingleAddress(MemoryAddress address)
-        {
-            //long addr = address.StartAddress & 0xFFFFFF;
-            //long shifted = (addr >> 16);
-            //string? domain = shifted switch
-            //{
-            //    0 => "BIOS",
-            //    2 => "EWRAM",
-            //    3 => "IWRAM",
-            //    8 => "ROM",
-            //    _ => null
-            //};
-            return APIs.Memory.ReadU8(address.StartAddress, address.Domain);
         }
     }
 }

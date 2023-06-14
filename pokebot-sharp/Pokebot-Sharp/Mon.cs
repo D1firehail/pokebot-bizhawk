@@ -33,6 +33,8 @@ namespace Pokebot_Sharp
         public uint Personality { get; private set; }
         public uint MagicWord { get; private set; }
         public uint OtId { get; private set; }
+        public uint Sv { get; private set; }
+        public bool IsShiny { get; private set; }
         public uint Language { get; private set; }
         public bool IsBadEgg { get; private set; }
         public bool HasSpecies { get; private set; }
@@ -85,6 +87,12 @@ namespace Pokebot_Sharp
         {
             Personality = memoryApi.ReadU32(address, domain);
             OtId = memoryApi.ReadU32(address + 4, domain);
+            uint sid = OtId >> 16;
+            uint tid = OtId & 0xFFFF;
+            uint pH = Personality >> 16;
+            uint pL = Personality & 0xFFFF;
+            Sv = tid ^ sid ^ pH ^ pL;
+            IsShiny = Sv < 8;
             MagicWord = Personality ^ OtId;
             Language = memoryApi.ReadU8(address + 18, domain);
             uint flags = memoryApi.ReadU8(address + 19, domain);

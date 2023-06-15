@@ -31,6 +31,7 @@ namespace Pokebot_Sharp.Common
         {
             this.btn_MasterToggle = new System.Windows.Forms.Button();
             this.textBox_TestOutput = new System.Windows.Forms.TextBox();
+            this.btn_Screenshot = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_MasterToggle
@@ -54,9 +55,20 @@ namespace Pokebot_Sharp.Common
             this.textBox_TestOutput.Size = new System.Drawing.Size(455, 239);
             this.textBox_TestOutput.TabIndex = 1;
             // 
+            // btn_Screenshot
+            // 
+            this.btn_Screenshot.Location = new System.Drawing.Point(13, 258);
+            this.btn_Screenshot.Name = "btn_Screenshot";
+            this.btn_Screenshot.Size = new System.Drawing.Size(101, 50);
+            this.btn_Screenshot.TabIndex = 2;
+            this.btn_Screenshot.Text = "Screenshot!";
+            this.btn_Screenshot.UseVisualStyleBackColor = true;
+            this.btn_Screenshot.Click += new System.EventHandler(this.btn_Screenshot_Click);
+            // 
             // PokebotForm
             // 
             this.ClientSize = new System.Drawing.Size(480, 320);
+            this.Controls.Add(this.btn_Screenshot);
             this.Controls.Add(this.textBox_TestOutput);
             this.Controls.Add(this.btn_MasterToggle);
             this.Name = "PokebotForm";
@@ -68,6 +80,7 @@ namespace Pokebot_Sharp.Common
 
         private System.Windows.Forms.Button btn_MasterToggle;
         private System.Windows.Forms.TextBox textBox_TestOutput;
+        private System.Windows.Forms.Button btn_Screenshot;
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using BizHawk.Client.Common;
+using Pokebot_Sharp.MemoryAddress;
 
-namespace Pokebot_Sharp
+namespace Pokebot_Sharp.AddressCollection
 {
     public interface IAddressCollection
     {
@@ -12,7 +13,7 @@ namespace Pokebot_Sharp
         /// Resets any addresses that depend on pointer structures, for example Trainer/Secret ID.
         /// </summary>
         public void ResetPointedAddresses();
-        public IMemoryApi? MemoryApi { get; set; }
+        public SimpleMemoryAddress StartScreenSniffer { get; }
         public SimpleMemoryAddress Tid { get; }
         public SimpleMemoryAddress Sid { get; }
         public SimpleMemoryAddress TrainerState { get; }

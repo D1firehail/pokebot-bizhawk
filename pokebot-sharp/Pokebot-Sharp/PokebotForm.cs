@@ -1,6 +1,7 @@
 ﻿using BizHawk.Client.Common;
 using BizHawk.Client.EmuHawk;
 using BizHawk.Emulation.Common;
+using Pokebot_Sharp.AddressCollection;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -31,9 +32,14 @@ namespace Pokebot_Sharp.Common
         public override void Restart()
         {
             base.Restart();
-            m_AddressCollection.MemoryApi = APIs.Memory;
             m_AddressCollection.ResetPointedAddresses();
             CurrentEmulatorState = EmulatorState.Uninitialized;
+            APIs.EmuClient.BeforeQuickLoad += OnBeforeQuickLoad;
+        }
+
+        private void OnBeforeQuickLoad(object sender, BeforeQuickLoadEventArgs e)
+        {
+            m_AddressCollection.ResetPointedAddresses();
         }
 
         protected override void UpdateAfter()
@@ -41,7 +47,7 @@ namespace Pokebot_Sharp.Common
             base.UpdateAfter();
 
             //Check if emulator stopped
-            if (APIs.Emulation.GetGameInfo().IsNullInstance() && CurrentEmulatorState != EmulatorState.DoNothing) 
+            if (APIs.Emulation.GetGameInfo().IsNullInstance() && CurrentEmulatorState != EmulatorState.DoNothing)
             {
                 CurrentEmulatorState = EmulatorState.Uninitialized;
             }
@@ -56,20 +62,29 @@ namespace Pokebot_Sharp.Common
                     }
                     break;
                 case EmulatorState.Startup:
-                    //TODO actually determine what state to go into, maybe get past title screen?
-                    CurrentEmulatorState = EmulatorState.ReadOnly;
+                    ExecuteStartup();
                     break;
                 case EmulatorState.ReadOnly:
                     ExecuteReadOnly();
                     break;
-                case EmulatorState.DoNothing: 
+                case EmulatorState.DoNothing:
                     break;
-                default: 
+                default:
                     throw new NotImplementedException("Unknown/Unsupported Emulator state");
             }
         }
         protected override string WindowTitleStatic => "Pokebot_Sharp";
 
+        private void ExecuteStartup()
+        {
+            var sniffer = m_AddressCollection.StartScreenSniffer.Read(APIs.Memory);
+            if (sniffer != 0)
+            {
+                //TODO actually determine what state to go into
+                m_AddressCollection.ResetPointedAddresses();
+                CurrentEmulatorState = EmulatorState.ReadOnly;
+            }
+        }
         private void ExecuteReadOnly()
         {
             //Placeholder testing stuff
@@ -82,6 +97,7 @@ namespace Pokebot_Sharp.Common
             textBox_TestOutput.AppendText("PosX: " + (m_AddressCollection.PosX.Read(APIs.Memory) - 7) + Environment.NewLine);
             textBox_TestOutput.AppendText("PosY: " + (m_AddressCollection.PosY.Read(APIs.Memory) - 7) + Environment.NewLine);
             textBox_TestOutput.AppendText("Facing: " + (m_AddressCollection.Facing.Read(APIs.Memory) - 7) + Environment.NewLine);
+            textBox_TestOutput.AppendText("Frame: " + APIs.Emulation.FrameCount() + Environment.NewLine);
             //Mon enemy = new Mon();
             //m_AddressCollection.Enemy.ReadInto(APIs.Memory, enemy);
             //MonParty party = new MonParty(m_AddressCollection.PartyCount);
@@ -119,7 +135,8 @@ namespace Pokebot_Sharp.Common
             {
                 m_LastEmulatorState = CurrentEmulatorState;
                 CurrentEmulatorState = EmulatorState.DoNothing;
-            } else
+            }
+            else
             {
                 CurrentEmulatorState = m_LastEmulatorState.Value;
                 m_LastEmulatorState = null;

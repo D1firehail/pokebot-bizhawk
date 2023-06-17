@@ -1,4 +1,5 @@
 ﻿using BizHawk.Client.Common;
+using Pokebot_Sharp.MemoryAddress;
 
 namespace Pokebot_Sharp
 {
@@ -83,10 +84,10 @@ namespace Pokebot_Sharp
 
         }
 
-        public void ReadFromMemory(IMemoryApi memoryApi, long address, string? domain)
+        public void ReadFromMemory(IMemoryApi memoryApi, long address)
         {
-            Personality = memoryApi.ReadU32(address, domain);
-            OtId = memoryApi.ReadU32(address + 4, domain);
+            Personality = MemoryHelper.Read(address, 4, memoryApi);
+            OtId = MemoryHelper.Read(address + 4, 4, memoryApi);
             uint sid = OtId >> 16;
             uint tid = OtId & 0xFFFF;
             uint pH = Personality >> 16;
@@ -94,22 +95,22 @@ namespace Pokebot_Sharp
             Sv = tid ^ sid ^ pH ^ pL;
             IsShiny = Sv < 8;
             MagicWord = Personality ^ OtId;
-            Language = memoryApi.ReadU8(address + 18, domain);
-            uint flags = memoryApi.ReadU8(address + 19, domain);
+            Language = MemoryHelper.Read(address + 18, 1, memoryApi);
+            uint flags = MemoryHelper.Read(address + 19, 1, memoryApi);
             IsBadEgg = (flags & 0b1u) != 0u;
             HasSpecies = (flags & 0b10u) != 0u;
             IsEgg = (flags & 0b100u) != 0u;
-            Markings = memoryApi.ReadU8(address + 27, domain);
-            Status = memoryApi.ReadU16(address + 80, domain);
-            Level = memoryApi.ReadU8(address + 84, domain);
-            Mail = memoryApi.ReadU32(address + 85, domain);
-            Hp = memoryApi.ReadU16(address + 86, domain);
-            MaxHp = memoryApi.ReadU16(address + 88, domain);
-            Attack = memoryApi.ReadU16(address + 90, domain);
-            Defense = memoryApi.ReadU16(address + 92, domain);
-            Speed = memoryApi.ReadU16(address + 94, domain);
-            SpAttack = memoryApi.ReadU16(address + 96, domain);
-            SpDefense = memoryApi.ReadU16(address + 98, domain);
+            Markings = MemoryHelper.Read(address + 27, 1, memoryApi);
+            Status = MemoryHelper.Read(address + 80, 2, memoryApi);
+            Level = MemoryHelper.Read(address + 84, 1, memoryApi);
+            Mail = MemoryHelper.Read(address + 85, 4, memoryApi);
+            Hp = MemoryHelper.Read(address + 86, 2, memoryApi);
+            MaxHp = MemoryHelper.Read(address + 88, 2, memoryApi);
+            Attack = MemoryHelper.Read(address + 90, 2, memoryApi);
+            Defense = MemoryHelper.Read(address + 92, 2, memoryApi);
+            Speed = MemoryHelper.Read(address + 94, 2, memoryApi);
+            SpAttack = MemoryHelper.Read(address + 96, 2, memoryApi);
+            SpDefense = MemoryHelper.Read(address + 98, 2, memoryApi);
 
             uint key = OtId ^ Personality;
             int[] pSel = m_SubstructSelector[Personality % 24u];
@@ -119,7 +120,7 @@ namespace Pokebot_Sharp
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    ss[j, i] = memoryApi.ReadU32(address + 32 + pSel[j] * 12 + i * 4, domain) ^ key;
+                    ss[j, i] = MemoryHelper.Read(address + 32 + pSel[j] * 12 + i * 4, 4, memoryApi) ^ key;
                 }
             }
 

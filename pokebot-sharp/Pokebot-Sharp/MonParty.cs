@@ -1,4 +1,5 @@
 ﻿using BizHawk.Client.Common;
+using Pokebot_Sharp.MemoryAddress;
 using System.Collections.Generic;
 
 namespace Pokebot_Sharp
@@ -11,14 +12,14 @@ namespace Pokebot_Sharp
             m_PartyCount = partyCount;
         }
         public List<Mon> Mons { get; } = new List<Mon>();
-        public void ReadFromMemory(IMemoryApi memoryApi, long address, string? domain)
+        public void ReadFromMemory(IMemoryApi memoryApi, long address)
         {
             Mons.Clear();
             uint partyCount = m_PartyCount.Read(memoryApi);
             for (uint i = 0; i < partyCount; i++)
             {
                 Mon newMon = new Mon();
-                newMon.ReadFromMemory(memoryApi, address + 100 * i, domain);
+                newMon.ReadFromMemory(memoryApi, address + 100 * i);
             }
         }
     }

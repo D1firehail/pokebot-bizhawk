@@ -1,5 +1,4 @@
-﻿using BizHawk.Client.Common;
-using Pokebot_Sharp.MemoryAddress;
+﻿using Pokebot_Sharp.MemoryAddress;
 
 namespace Pokebot_Sharp.AddressCollection
 {

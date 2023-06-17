@@ -20,6 +20,7 @@ namespace Pokebot_Sharp
             {
                 Mon newMon = new Mon();
                 newMon.ReadFromMemory(memoryApi, address + 100 * i);
+                Mons.Add(newMon);
             }
         }
     }

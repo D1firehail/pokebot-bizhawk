@@ -32,6 +32,12 @@ namespace Pokebot_Sharp.Common
             this.btn_MasterToggle = new System.Windows.Forms.Button();
             this.textBox_TestOutput = new System.Windows.Forms.TextBox();
             this.btn_Screenshot = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.radio_Left = new System.Windows.Forms.RadioButton();
+            this.radio_Middle = new System.Windows.Forms.RadioButton();
+            this.radio_Right = new System.Windows.Forms.RadioButton();
+            this.label_Starter = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_MasterToggle
@@ -47,7 +53,7 @@ namespace Pokebot_Sharp.Common
             // 
             // textBox_TestOutput
             // 
-            this.textBox_TestOutput.Location = new System.Drawing.Point(13, 13);
+            this.textBox_TestOutput.Location = new System.Drawing.Point(13, 12);
             this.textBox_TestOutput.Multiline = true;
             this.textBox_TestOutput.Name = "textBox_TestOutput";
             this.textBox_TestOutput.ReadOnly = true;
@@ -65,13 +71,72 @@ namespace Pokebot_Sharp.Common
             this.btn_Screenshot.UseVisualStyleBackColor = true;
             this.btn_Screenshot.Click += new System.EventHandler(this.btn_Screenshot_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label_Starter);
+            this.panel1.Controls.Add(this.radio_Right);
+            this.panel1.Controls.Add(this.radio_Middle);
+            this.panel1.Controls.Add(this.radio_Left);
+            this.panel1.Location = new System.Drawing.Point(190, 257);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(172, 51);
+            this.panel1.TabIndex = 3;
+            // 
+            // radio_Left
+            // 
+            this.radio_Left.AutoSize = true;
+            this.radio_Left.Location = new System.Drawing.Point(4, 28);
+            this.radio_Left.Name = "radio_Left";
+            this.radio_Left.Size = new System.Drawing.Size(43, 17);
+            this.radio_Left.TabIndex = 0;
+            this.radio_Left.Text = "Left";
+            this.radio_Left.UseVisualStyleBackColor = true;
+            this.radio_Left.CheckedChanged += new System.EventHandler(this.radio_Left_CheckedChanged);
+            // 
+            // radio_Middle
+            // 
+            this.radio_Middle.AutoSize = true;
+            this.radio_Middle.Checked = true;
+            this.radio_Middle.Location = new System.Drawing.Point(53, 28);
+            this.radio_Middle.Name = "radio_Middle";
+            this.radio_Middle.Size = new System.Drawing.Size(56, 17);
+            this.radio_Middle.TabIndex = 1;
+            this.radio_Middle.TabStop = true;
+            this.radio_Middle.Text = "Middle";
+            this.radio_Middle.UseVisualStyleBackColor = true;
+            this.radio_Middle.CheckedChanged += new System.EventHandler(this.radio_Middle_CheckedChanged);
+            // 
+            // radio_Right
+            // 
+            this.radio_Right.AutoSize = true;
+            this.radio_Right.Location = new System.Drawing.Point(115, 28);
+            this.radio_Right.Name = "radio_Right";
+            this.radio_Right.Size = new System.Drawing.Size(50, 17);
+            this.radio_Right.TabIndex = 2;
+            this.radio_Right.Text = "Right";
+            this.radio_Right.UseVisualStyleBackColor = true;
+            this.radio_Right.CheckedChanged += new System.EventHandler(this.radio_Right_CheckedChanged);
+            // 
+            // label_Starter
+            // 
+            this.label_Starter.AutoSize = true;
+            this.label_Starter.Location = new System.Drawing.Point(41, 12);
+            this.label_Starter.Name = "label_Starter";
+            this.label_Starter.Size = new System.Drawing.Size(85, 13);
+            this.label_Starter.TabIndex = 3;
+            this.label_Starter.Text = "Starter Selection";
+            this.label_Starter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // PokebotForm
             // 
             this.ClientSize = new System.Drawing.Size(480, 320);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btn_Screenshot);
             this.Controls.Add(this.textBox_TestOutput);
             this.Controls.Add(this.btn_MasterToggle);
             this.Name = "PokebotForm";
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -81,6 +146,11 @@ namespace Pokebot_Sharp.Common
         private System.Windows.Forms.Button btn_MasterToggle;
         private System.Windows.Forms.TextBox textBox_TestOutput;
         private System.Windows.Forms.Button btn_Screenshot;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton radio_Left;
+        private System.Windows.Forms.RadioButton radio_Middle;
+        private System.Windows.Forms.RadioButton radio_Right;
+        private System.Windows.Forms.Label label_Starter;
     }
 }
 

@@ -4,7 +4,15 @@
     {
         Uninitialized,
         Startup,
-        ReadOnly,
+        StarterSelection,
+        Restarting,
         DoNothing
+    }
+
+    public enum EmulatorMode
+    {
+        Disabled,
+        Reporting,
+        Starter
     }
 }

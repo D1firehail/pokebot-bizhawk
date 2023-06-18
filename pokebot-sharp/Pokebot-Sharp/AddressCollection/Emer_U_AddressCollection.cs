@@ -17,6 +17,8 @@ namespace Pokebot_Sharp.AddressCollection
             uint pstats = 0x20244EC;
             uint pcount = 0x20244E9;
             uint sniffLocation = 0x3007660;
+            uint battleCursor =  0x20244AC;
+
             StartScreenSniffer = new SimpleMemoryAddress(sniffLocation, 4);
             TrainerState = new SimpleMemoryAddress(TrainerPointer + 199, 1);
             MapId = new SimpleMemoryAddress(TrainerPointer + 200, 1);
@@ -28,6 +30,7 @@ namespace Pokebot_Sharp.AddressCollection
             PartyCount = new SimpleMemoryAddress(pcount, 1);
             Party = new ClassMemoryAddress<MonParty>(pstats);
             m_Trainer = new SimpleMemoryAddress(TrainerPointer, 4);
+            BattleCursor = new SimpleMemoryAddress(battleCursor, 1);
             m_Tid = new PointedMemoryAddess(m_Trainer, 2, 10);
             m_Sid = new PointedMemoryAddess(m_Trainer, 2, 12);
         }
@@ -57,7 +60,7 @@ namespace Pokebot_Sharp.AddressCollection
         public SimpleMemoryAddress Sid => m_Sid;
 
         public SimpleMemoryAddress Facing { get; }
-
+        public SimpleMemoryAddress BattleCursor { get; }
         public ClassMemoryAddress<Mon> Enemy { get; }
         public SimpleMemoryAddress PartyCount { get; }
         public ClassMemoryAddress<MonParty> Party { get; }

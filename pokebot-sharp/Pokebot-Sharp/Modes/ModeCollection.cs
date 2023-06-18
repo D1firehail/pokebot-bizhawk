@@ -11,7 +11,8 @@ namespace Pokebot_Sharp.Modes
             m_ModeExecutors = new Dictionary<EmulatorMode, IModeExecutor>
             {
                 { EmulatorMode.Reporting, new ReportingModeExecutor(parentForm) },
-                { EmulatorMode.Starter, new StarterModeExecutor(parentForm) }
+                { EmulatorMode.Starter, new StarterModeExecutor(parentForm) },
+                { EmulatorMode.Spin, new SpinModeExecutor(parentForm) }
             };
 
         }

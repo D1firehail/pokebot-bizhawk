@@ -21,6 +21,7 @@ namespace Pokebot_Sharp.AddressCollection
         public SimpleMemoryAddress PosX { get; }
         public SimpleMemoryAddress PosY { get; }
         public SimpleMemoryAddress Facing { get; }
+        public SimpleMemoryAddress BattleCursor { get; }
         public ClassMemoryAddress<Mon> Enemy { get; }
         public SimpleMemoryAddress PartyCount { get; }
         public ClassMemoryAddress<MonParty> Party { get; }

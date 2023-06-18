@@ -37,10 +37,11 @@ namespace Pokebot_Sharp.Modes
             output += ("TrainerMapBank: " + m_Form.AddressCollection.TrainerMapBank.Read(APIs.Memory) + Environment.NewLine);
             output += ("PosX: " + (m_Form.AddressCollection.PosX.Read(APIs.Memory) - 7) + Environment.NewLine);
             output += ("PosY: " + (m_Form.AddressCollection.PosY.Read(APIs.Memory) - 7) + Environment.NewLine);
-            output += ("Facing: " + (m_Form.AddressCollection.Facing.Read(APIs.Memory) - 7) + Environment.NewLine);
+            output += ("Facing: " + m_Form.AddressCollection.Facing.Read(APIs.Memory) + Environment.NewLine);
             output += ("PosY: " + (m_Form.AddressCollection.PosY.Read(APIs.Memory) - 7) + Environment.NewLine);
             output += ("StartSniffer: " + m_Form.AddressCollection.StartScreenSniffer.Read(APIs.Memory) + Environment.NewLine);
             output += ("PartyCount: " + m_Form.AddressCollection.PartyCount.Read(APIs.Memory) + Environment.NewLine);
+            output += ("BattleCursor: " + m_Form.AddressCollection.BattleCursor.Read(APIs.Memory) + Environment.NewLine);
             m_Form.DisplayMessage(output, true);
             //Mon enemy = new Mon();
             //m_Form.AddressCollection.Enemy.ReadInto(APIs.Memory, enemy);

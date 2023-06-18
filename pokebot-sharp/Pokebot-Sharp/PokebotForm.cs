@@ -20,6 +20,7 @@ namespace Pokebot_Sharp.Common
         private ModeCollection m_Modes;
 
         private int m_PowerCounter = 0;
+        private EmulatorMode m_Mode;
 
         protected override string WindowTitleStatic => "Pokebot_Sharp";
 
@@ -27,28 +28,37 @@ namespace Pokebot_Sharp.Common
         public IAddressCollection AddressCollection { get; private set; }
         public ApiContainer? _maybeAPIContainer { get; set; }
         public EmulatorState CurrentEmulatorState { get; set; } = EmulatorState.Uninitialized;
-        public EmulatorMode Mode { get; set; } = EmulatorMode.Starter;
+        public EmulatorMode Mode
+        {
+            get => m_Mode;
+            set
+            {
+                m_Mode = value;
+                comboBox_Mode.SelectedItem = value;
+            }
+        }
 
         public PokebotForm()
         {
             InitializeComponent();
             AddressCollection = new Emer_U_AddressCollection();
             m_Modes = new ModeCollection(this);
+            comboBox_Mode.DataSource = Enum.GetValues(typeof(EmulatorMode));
+            Mode = EmulatorMode.Reporting;
         }
-        private void OnBeforeQuickLoad(object sender, BeforeQuickLoadEventArgs e)
-        {
-            AddressCollection.ResetPointedAddresses();
-            m_Modes.ResetAll();
-            CurrentEmulatorState = EmulatorState.Uninitialized;
-            APIs.Joypad.Set("Power", false);
-            m_PowerCounter = 0;
-        }
+        private void OnBeforeQuickLoad(object sender, BeforeQuickLoadEventArgs e) => LocalRestart();
         private void LocalRestart()
         {
             AddressCollection.ResetPointedAddresses();
             m_Modes.ResetAll();
             CurrentEmulatorState = EmulatorState.Uninitialized;
             APIs.Joypad.Set("Power", false);
+            APIs.Joypad.Set("A", false);
+            APIs.Joypad.Set("B", false);
+            APIs.Joypad.Set("Up", false);
+            APIs.Joypad.Set("Right", false);
+            APIs.Joypad.Set("Down", false);
+            APIs.Joypad.Set("Left", false);
             m_PowerCounter = 0;
             if (!m_EventsAdded)
             {
@@ -59,6 +69,7 @@ namespace Pokebot_Sharp.Common
         public override void Restart()
         {
             base.Restart();
+            m_EventsAdded = false;
             LocalRestart();
             m_Modes.FullResetAll();
         }
@@ -98,7 +109,10 @@ namespace Pokebot_Sharp.Common
                 return;
             }
 
-            //m_Modes.Execute(EmulatorMode.Reporting); //for development purposes
+            if (Mode != EmulatorMode.Reporting && checkbox_AlwaysReport.Checked)
+            {
+                m_Modes.Execute(EmulatorMode.Reporting); //for development purposes
+            }
             m_Modes.Execute(Mode);
         }
 
@@ -175,5 +189,11 @@ namespace Pokebot_Sharp.Common
             }
         }
         #endregion
+
+        private void comboBox_Mode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool success = Enum.TryParse<EmulatorMode>(comboBox_Mode.SelectedValue.ToString(), out EmulatorMode newMode);
+            Mode = success ? newMode : EmulatorMode.Disabled;
+        }
     }
 }

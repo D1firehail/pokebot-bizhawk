@@ -6,6 +6,10 @@
         Startup,
         StarterSelection,
         Restarting,
+        Spinning,
+        Battle,
+        BattleRun,
+        BattleCatch,
         DoNothing
     }
 
@@ -13,6 +17,7 @@
     {
         Disabled,
         Reporting,
-        Starter
+        Starter,
+        Spin
     }
 }

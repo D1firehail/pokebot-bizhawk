@@ -195,5 +195,15 @@ namespace Pokebot_Sharp.Common
             bool success = Enum.TryParse<EmulatorMode>(comboBox_Mode.SelectedValue.ToString(), out EmulatorMode newMode);
             Mode = success ? newMode : EmulatorMode.Disabled;
         }
+
+        private void numericUpDown_TargetFrame_ValueChanged(object sender, EventArgs e)
+        {
+            m_Modes.ModeExecutors.TryGetValue(EmulatorMode.Starter, out IModeExecutor? executor);
+
+            if (executor is StarterModeExecutor starterExecutor)
+            {
+                starterExecutor.SetTargetFrame(Convert.ToUInt32(numericUpDown_TargetFrame.Value));
+            }
+        }
     }
 }

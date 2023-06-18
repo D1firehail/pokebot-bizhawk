@@ -5,10 +5,10 @@ namespace Pokebot_Sharp.Modes
 {
     public class ModeCollection
     {
-        private Dictionary<EmulatorMode, IModeExecutor> m_ModeExecutors;
+        public Dictionary<EmulatorMode, IModeExecutor> ModeExecutors { get; private set; }
         public ModeCollection(PokebotForm parentForm)
         {
-            m_ModeExecutors = new Dictionary<EmulatorMode, IModeExecutor>
+            ModeExecutors = new Dictionary<EmulatorMode, IModeExecutor>
             {
                 { EmulatorMode.Reporting, new ReportingModeExecutor(parentForm) },
                 { EmulatorMode.Starter, new StarterModeExecutor(parentForm) },
@@ -19,7 +19,7 @@ namespace Pokebot_Sharp.Modes
 
         public void Execute(EmulatorMode mode)
         {
-            if (m_ModeExecutors.TryGetValue(mode, out IModeExecutor executor))
+            if (ModeExecutors.TryGetValue(mode, out IModeExecutor executor))
             {
                 executor.Execute();
             }
@@ -27,7 +27,7 @@ namespace Pokebot_Sharp.Modes
 
         public void ResetAll()
         {
-            foreach (var m in m_ModeExecutors.Values)
+            foreach (var m in ModeExecutors.Values)
             {
                 m.Reset();
             }
@@ -35,7 +35,7 @@ namespace Pokebot_Sharp.Modes
 
         public void FullResetAll()
         {
-            foreach (var m in m_ModeExecutors.Values)
+            foreach (var m in ModeExecutors.Values)
             {
                 m.FullReset();
             }

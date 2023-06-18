@@ -39,7 +39,12 @@ namespace Pokebot_Sharp.Common
             this.radio_Left = new System.Windows.Forms.RadioButton();
             this.comboBox_Mode = new System.Windows.Forms.ComboBox();
             this.checkbox_AlwaysReport = new System.Windows.Forms.CheckBox();
+            this.numericUpDown_TargetFrame = new System.Windows.Forms.NumericUpDown();
+            this.label_TargetOffset = new System.Windows.Forms.Label();
+            this.textBox_TargetParams = new System.Windows.Forms.TextBox();
+            this.label_TargetParams = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_TargetFrame)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_MasterToggle
@@ -77,13 +82,17 @@ namespace Pokebot_Sharp.Common
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label_TargetParams);
+            this.panel1.Controls.Add(this.textBox_TargetParams);
+            this.panel1.Controls.Add(this.label_TargetOffset);
+            this.panel1.Controls.Add(this.numericUpDown_TargetFrame);
             this.panel1.Controls.Add(this.label_Starter);
             this.panel1.Controls.Add(this.radio_Right);
             this.panel1.Controls.Add(this.radio_Middle);
             this.panel1.Controls.Add(this.radio_Left);
             this.panel1.Location = new System.Drawing.Point(13, 257);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(172, 51);
+            this.panel1.Size = new System.Drawing.Size(193, 126);
             this.panel1.TabIndex = 3;
             // 
             // label_Starter
@@ -134,7 +143,7 @@ namespace Pokebot_Sharp.Common
             // comboBox_Mode
             // 
             this.comboBox_Mode.FormattingEnabled = true;
-            this.comboBox_Mode.Location = new System.Drawing.Point(192, 258);
+            this.comboBox_Mode.Location = new System.Drawing.Point(212, 257);
             this.comboBox_Mode.Name = "comboBox_Mode";
             this.comboBox_Mode.Size = new System.Drawing.Size(121, 21);
             this.comboBox_Mode.TabIndex = 4;
@@ -143,12 +152,55 @@ namespace Pokebot_Sharp.Common
             // checkbox_AlwaysReport
             // 
             this.checkbox_AlwaysReport.AutoSize = true;
-            this.checkbox_AlwaysReport.Location = new System.Drawing.Point(104, 315);
+            this.checkbox_AlwaysReport.Location = new System.Drawing.Point(212, 309);
             this.checkbox_AlwaysReport.Name = "checkbox_AlwaysReport";
             this.checkbox_AlwaysReport.Size = new System.Drawing.Size(94, 17);
             this.checkbox_AlwaysReport.TabIndex = 5;
             this.checkbox_AlwaysReport.Text = "Always Report";
             this.checkbox_AlwaysReport.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown_TargetFrame
+            // 
+            this.numericUpDown_TargetFrame.Location = new System.Drawing.Point(3, 103);
+            this.numericUpDown_TargetFrame.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.numericUpDown_TargetFrame.Name = "numericUpDown_TargetFrame";
+            this.numericUpDown_TargetFrame.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown_TargetFrame.TabIndex = 4;
+            this.numericUpDown_TargetFrame.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDown_TargetFrame.ValueChanged += new System.EventHandler(this.numericUpDown_TargetFrame_ValueChanged);
+            // 
+            // label_TargetOffset
+            // 
+            this.label_TargetOffset.AutoSize = true;
+            this.label_TargetOffset.Location = new System.Drawing.Point(128, 105);
+            this.label_TargetOffset.Name = "label_TargetOffset";
+            this.label_TargetOffset.Size = new System.Drawing.Size(41, 13);
+            this.label_TargetOffset.TabIndex = 5;
+            this.label_TargetOffset.Text = "+ ~476";
+            // 
+            // textBox_TargetParams
+            // 
+            this.textBox_TargetParams.Location = new System.Drawing.Point(4, 77);
+            this.textBox_TargetParams.Name = "textBox_TargetParams";
+            this.textBox_TargetParams.Size = new System.Drawing.Size(161, 20);
+            this.textBox_TargetParams.TabIndex = 6;
+            // 
+            // label_TargetParams
+            // 
+            this.label_TargetParams.AutoSize = true;
+            this.label_TargetParams.Location = new System.Drawing.Point(3, 61);
+            this.label_TargetParams.Name = "label_TargetParams";
+            this.label_TargetParams.Size = new System.Drawing.Size(184, 13);
+            this.label_TargetParams.TabIndex = 7;
+            this.label_TargetParams.Text = "Custom Target Params ( / for multiple)";
             // 
             // PokebotForm
             // 
@@ -162,6 +214,7 @@ namespace Pokebot_Sharp.Common
             this.Name = "PokebotForm";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_TargetFrame)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,6 +231,10 @@ namespace Pokebot_Sharp.Common
         private System.Windows.Forms.Label label_Starter;
         private System.Windows.Forms.ComboBox comboBox_Mode;
         private System.Windows.Forms.CheckBox checkbox_AlwaysReport;
+        public System.Windows.Forms.NumericUpDown numericUpDown_TargetFrame;
+        private System.Windows.Forms.Label label_TargetOffset;
+        private System.Windows.Forms.Label label_TargetParams;
+        public System.Windows.Forms.TextBox textBox_TargetParams;
     }
 }
 

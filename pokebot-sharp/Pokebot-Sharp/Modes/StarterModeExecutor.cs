@@ -31,6 +31,11 @@ namespace Pokebot_Sharp.Modes
             }
         }
 
+        public void SetTargetFrame(uint targetFrame)
+        {
+            m_TargetFrame = targetFrame;
+        }
+
         public void Reset()
         {
             m_FlipFlop = false;
@@ -94,22 +99,45 @@ namespace Pokebot_Sharp.Modes
             {
                 MonParty party = new MonParty(m_Form.AddressCollection.PartyCount);
                 m_Form.AddressCollection.Party.ReadInto(APIs.Memory, party);
-
                 if (party.Mons.Count > 0)
                 {
-                    if (party.Mons[0].IsShiny)
+                    string monString = party.Mons[0].ToString();
+                    string customParams = m_Form.textBox_TargetParams.Text;
+                    //if no params given, just check if it's shiny
+                    if (party.Mons[0].IsShiny && string.IsNullOrEmpty(customParams))
                     {
                         //manual intervention for now
                         m_Form.CurrentEmulatorState = EmulatorState.DoNothing;
                     }
                     else
                     {
-                        //restart, targeting 1 frame later
-                        m_TargetFrame++;
-                        m_Form.CurrentEmulatorState = EmulatorState.Restarting;
+                        //split custom params into a list and check that the monString contains each of them
+                        string[] paramList = customParams.Split(new char[] { '/' });
+                        bool passesCustom = true;
+                        foreach (var item in paramList)
+                        {
+                            if (!monString.Contains(item.Trim()))
+                            {
+                                passesCustom = false;
+                                break;
+                            }
+                        }
+
+                        //if monString contains every custom parameter, await manual input. Otherwise, do nothing
+                        if (passesCustom && !string.IsNullOrEmpty(customParams))
+                        {
+                            m_Form.CurrentEmulatorState = EmulatorState.DoNothing;
+                        } 
+                        else
+                        {
+                            //restart, targeting 1 frame later
+                            m_TargetFrame++;
+                            m_Form.numericUpDown_TargetFrame.Value = m_TargetFrame;
+                            m_Form.CurrentEmulatorState = EmulatorState.Restarting;
+                        }
                     }
 
-                    m_Form.DisplayMessage(party.Mons[0].ToString(), true);
+                    m_Form.DisplayMessage(monString, true);
 
                     //make sure A is no longer pressed after the starter has been chosen
                     APIs.Joypad.Set("A", false);

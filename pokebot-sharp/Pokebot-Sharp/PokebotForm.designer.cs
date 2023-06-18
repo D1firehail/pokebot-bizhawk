@@ -60,6 +60,7 @@ namespace Pokebot_Sharp.Common
             this.textBox_TestOutput.Name = "textBox_TestOutput";
             this.textBox_TestOutput.ReadOnly = true;
             this.textBox_TestOutput.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.textBox_TestOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_TestOutput.Size = new System.Drawing.Size(455, 239);
             this.textBox_TestOutput.TabIndex = 1;
             // 

@@ -1,5 +1,6 @@
 ﻿using BizHawk.Client.Common;
 using Pokebot_Sharp.MemoryAddress;
+using System;
 
 namespace Pokebot_Sharp
 {
@@ -169,6 +170,36 @@ namespace Pokebot_Sharp
             SpAttackIv = (flags >> 20) & 0x1F;
             SpDefenseIv = (flags >> 25) & 0x1F;
             AltAbility = (flags >> 31) & 1;
+        }
+
+        public override string ToString()
+        {
+            var props = typeof(Mon).GetProperties();
+
+            string result = string.Empty;
+
+            foreach (var prop in props)
+            {
+
+                result += prop.Name + ": ";
+                if (prop.PropertyType == typeof(uint[]))
+                {
+                    uint[]? values = prop.GetValue(this) as uint[];
+                    if (values != null)
+                    {
+                        foreach (var value in values)
+                        {
+                            result += Environment.NewLine + value.ToString();
+                        }
+                    }
+                } else
+                {
+                    result += prop.GetValue(this);
+                }
+                result += Environment.NewLine;
+            }
+
+            return result;
         }
     }
 }

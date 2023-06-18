@@ -109,6 +109,8 @@ namespace Pokebot_Sharp.Modes
                         m_Form.CurrentEmulatorState = EmulatorState.Restarting;
                     }
 
+                    m_Form.DisplayMessage(party.Mons[0].ToString(), true);
+
                     //make sure A is no longer pressed after the starter has been chosen
                     APIs.Joypad.Set("A", false);
                 }
